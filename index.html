@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mystic Language Flow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="overrides.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">m</span><span>Mystic<span class="muted">.</span></span></div>
+      <div class="top-actions">
+        <button class="icon-button" aria-label="Notifications" data-nav="notifications">♧<i></i></button>
+        <button class="avatar-button" aria-label="Open profile" data-nav="profile">AK</button>
+      </div>
+    </header>
+
+    <section id="home" class="page active">
+      <p class="eyebrow">SUNDAY, 26 JULY</p>
+      <h1>Welcome back, <em>Ananya</em></h1>
+      <p class="intro">Your voice is getting stronger. Let’s make today count.</p>
+
+      <section class="hero-card">
+        <span class="hero-orb orb-one"></span><span class="hero-orb orb-two"></span>
+        <div class="hero-copy"><p>YOUR LANGUAGE, YOUR POWER</p><h2>Speak with<br><em>confidence.</em></h2><button class="light-cta" data-nav="courses">Explore courses <span>→</span></button></div>
+        <div class="hero-art"><div class="art-face"></div><div class="art-hair"></div><div class="art-shirt"></div><span class="sparkle s1">✦</span><span class="sparkle s2">✦</span></div>
+      </section>
+
+      <section class="section-head"><div><p class="eyebrow">YOUR LEARNING SPACE</p><h2>Today’s <em>flow</em></h2></div><button class="text-button">Edit</button></section>
+      <section class="todo-card">
+        <div class="todo-icon">✓</div><div class="todo-main"><b>Complete your speaking warm-up</b><span>English Communication · 10 min</span></div><button class="round-play">▶</button>
+      </section>
+      <div class="days-row" aria-label="Class days"><button class="day done"><small>DAY</small><b>01</b><span>✓</span></button><button class="day current"><small>DAY</small><b>02</b><span>Now</span></button><button class="day"><small>DAY</small><b>03</b></button><button class="day"><small>DAY</small><b>04</b></button><button class="day"><small>DAY</small><b>05</b></button></div>
+
+      <section class="vocab-card"><div><p class="eyebrow">WORD OF THE DAY</p><h2>Articulate <button class="audio" aria-label="Listen">◖</button></h2><p class="meaning">/ɑːˈtɪkjələt/ &nbsp; · &nbsp; able to express ideas clearly</p><p class="example">“She was articulate and confident in the interview.”</p></div><div class="vocab-letter">A</div></section>
+
+      <section class="section-head compact"><div><p class="eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2>My <em>classes</em></h2></div><button class="text-button" data-nav="courses">See all</button></section>
+      <div class="class-card"><div class="class-thumb thumb-speaking"><span>LIVE</span><button>▶</button></div><div><p class="tiny-label">ENGLISH COMMUNICATION</p><h3>Speaking without fear</h3><p class="subtle">Day 2 · Today, 6:30 PM</p><div class="progress"><span style="width: 38%"></span></div><small>38% complete</small></div></div>
+
+      <section class="section-head compact"><div><p class="eyebrow">KEEP GOING</p><h2>Daily <em>advice</em></h2></div></section>
+      <blockquote>“Fluency is not about speaking fast. It’s about sharing your thoughts without shrinking.”</blockquote>
+
+      <section class="section-head compact"><div><p class="eyebrow">SNEAK PEEK</p><h2>Sample <em>notes</em></h2></div><button class="text-button" data-nav="notes">Open</button></section>
+      <div class="notes-preview"><div class="paper"><span>01</span><b>Everyday<br>conversation</b><i>How are you?</i></div><div class="notes-text"><h3>Learn before you enroll</h3><p>Preview two pages of notes from every course.</p><button class="outline-button" data-nav="notes">Preview notes</button></div></div>
+
+      <section class="reviews"><p class="eyebrow">LOVED BY LEARNERS</p><h2>Real words. <em>Real growth.</em></h2><div class="review-card"><div class="review-top"><div class="reviewer"><span class="mini-avatar">S</span><div><b>Shruti Verma</b><small>Interview Skills learner</small></div></div><span class="stars">★★★★★</span></div><p>“I cracked my interview after joining Mystic. The practice sessions changed everything.”</p></div></section>
+    </section>
+
+    <section id="courses" class="page">
+      <p class="eyebrow">LEARN YOUR WAY</p><h1>Courses we <em>provide</em></h1><p class="intro">From basics to advance — designed for real-world confidence.</p>
+      <div class="search">⌕ <input aria-label="Search courses" placeholder="Search a course" /></div>
+      <div id="course-list" class="course-list"></div>
+      <section class="course-hobby"><div class="hobby-bloom">✿</div><div><p class="eyebrow">HOBBY CORNER</p><h3>Speak beyond the classroom</h3><p>Story circles, book chats and fun English challenges await after your first course.</p></div><span class="locked-pill">⌁ Locked</span></section>
+    </section>
+
+    <section id="notes" class="page">
+      <p class="eyebrow">YOUR RESOURCE LIBRARY</p><h1>Notes & <em>practice</em></h1>
+      <div class="lock-hero"><span>⌁</span><h2>Unlock your learning kit</h2><p>Purchase a course to access PDF notes, worksheets, vocabulary lists, grammar sheets and assignments.</p><button class="dark-cta" data-nav="courses">Browse courses</button></div>
+      <p class="eyebrow notes-label">FREE PREVIEWS</p>
+      <div class="sample-note"><div class="paper big"><span>01</span><b>Introducing<br>yourself</b><i>Hello, I’m...</i></div><div><h3>English Basics</h3><p>Sample pages · 2 pages</p><button class="outline-button">View preview</button></div></div>
+      <div class="sample-note"><div class="paper big blue"><span>02</span><b>Interview<br>openers</b><i>Tell me about...</i></div><div><h3>Interview Skills</h3><p>Sample pages · 2 pages</p><button class="outline-button">View preview</button></div></div>
+      <section class="hobby"><span>✿</span><div><p class="eyebrow">HOBBY CORNER</p><h3>Coming alive with your first course</h3><p>Fun prompts and speaking clubs, just for you.</p></div><b>LOCKED</b></section>
+    </section>
+
+    <section id="certificates" class="page"><p class="eyebrow">YOUR ACHIEVEMENTS</p><h1>Certificates</h1><div class="empty-state"><div class="medal">✦</div><h2>Your first certificate is waiting.</h2><p>Finish a course to receive a verified Mystic Language Flow certificate.</p><button class="dark-cta" data-nav="courses">Find a course</button></div></section>
+
+    <section id="cart" class="page"><p class="eyebrow">READY WHEN YOU ARE</p><h1>Your <em>cart</em></h1><div id="cart-items"></div><div id="cart-empty" class="empty-state small"><div class="bag">♧</div><h2>Your cart is empty</h2><p>Find a course made for your next chapter.</p><button class="dark-cta" data-nav="courses">Explore courses</button></div><div id="cart-summary" class="cart-summary hidden"><div class="coupon">✦ <span>FIRSTFLOW20 applied</span><b>−20%</b></div><div class="total-line"><span>Original total</span><b id="original-total"></b></div><div class="total-line"><span>First purchase discount</span><b id="discount-total"></b></div><div class="final-line"><span>Total today</span><b id="final-total"></b></div><p class="saving" id="saving"></p><button class="checkout">Checkout securely <span>→</span></button></div></section>
+
+    <section id="profile" class="page"><p class="eyebrow">MY ACCOUNT</p><h1>Profile</h1><div class="profile-card"><div class="large-avatar">AK</div><h2>Ananya Kapoor</h2><p>Learning English Communication</p><button class="outline-button">Edit profile</button></div><div class="details"><p><span>Age</span><b>22 years</b></p><p><span>Email</span><b>ananya@email.com</b></p><p><span>Phone number</span><b>+91 98765 43210</b></p><p><span>Qualification</span><b>Graduate</b></p><p><span>Resume</span><b class="pink">View uploaded file</b></p><p><span>My English rating</span><b>68% · Growing strong</b></p></div><section class="profile-progress"><p class="eyebrow">MY PROGRESS</p><h3>English Communication <span>38%</span></h3><div class="progress"><span style="width:38%"></span></div><p class="subtle">2 of 8 live sessions attended</p></section><button class="list-button">♡ &nbsp; Wishlist <span>›</span></button><button class="list-button">♧ &nbsp; Notifications <span>3</span></button><button class="list-button logout">↪ &nbsp; Log out <span>›</span></button></section>
+    <section id="notifications" class="page"><button class="back-button" data-nav="profile">← &nbsp; Back to profile</button><p class="eyebrow">STAY IN THE FLOW</p><h1>Notification <em>centre</em></h1><p class="intro">Everything important for your learning, in one place.</p><div class="notifications"><article class="notification unread"><span class="notice-icon pink-bg">✦</span><div><h3>Live class starts today</h3><p>Speaking without fear · 6:30 PM</p><small>Just now</small></div><i></i></article><article class="notification unread"><span class="notice-icon blue-bg">▤</span><div><h3>New notes uploaded</h3><p>Day 2 speaking warm-up is ready for you.</p><small>2 hours ago</small></div><i></i></article><article class="notification"><span class="notice-icon lav-bg">✓</span><div><h3>Assignment reminder</h3><p>Submit your “Introduce yourself” voice note.</p><small>Yesterday</small></div></article><article class="notification"><span class="notice-icon cream-bg">%</span><div><h3>A little gift for your next course</h3><p>Your first-purchase 20% offer is active.</p><small>Yesterday</small></div></article><article class="notification"><span class="notice-icon blue-bg">♜</span><div><h3>Your certificate is waiting</h3><p>Complete your course to unlock your certificate.</p><small>3 days ago</small></div></article></div></section>
+  </main>
+
+  <nav class="bottom-nav"><button class="nav-link active" data-nav="home"><span>⌂</span>Home</button><button class="nav-link" data-nav="courses"><span>▣</span>Courses</button><button class="nav-link" data-nav="notes"><span>▤</span>Notes</button><button class="nav-link" data-nav="certificates"><span>♜</span>Certificates</button><button class="nav-link" data-nav="cart"><span>♧</span>Cart <i id="cart-count"></i></button></nav>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+  <script src="overrides.js"></script>
+</body>
+</html>
