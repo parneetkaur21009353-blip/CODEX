@@ -69,13 +69,64 @@
 
     <section id="certificates" class="page"><p class="eyebrow">YOUR ACHIEVEMENTS</p><h1>Certificates</h1><div class="empty-state"><div class="medal">✦</div><h2>Your first certificate is waiting.</h2><p>Finish a course to receive a verified Mystic Language Flow certificate.</p><button class="dark-cta" data-nav="courses">Find a course</button></div></section>
 
-    <section id="cart" class="page"><p class="eyebrow">READY WHEN YOU ARE</p><h1>Your <em>cart</em></h1><div id="cart-items"></div><div id="cart-empty" class="empty-state small"><div class="bag">♧</div><h2>Your cart is empty</h2><p>Find a course made for your next chapter.</p><button class="dark-cta" data-nav="courses">Explore courses</button></div><div id="cart-summary" class="cart-summary hidden"><div class="coupon">✦ <span>FIRSTFLOW20 applied</span><b>−20%</b></div><div class="total-line"><span>Original total</span><b id="original-total"></b></div><div class="total-line"><span>First purchase discount</span><b id="discount-total"></b></div><div class="final-line"><span>Total today</span><b id="final-total"></b></div><p class="saving" id="saving"></p><button class="checkout">Checkout securely <span>→</span></button></div></section>
+    <section id="cart" class="page"><p class="eyebrow">READY WHEN YOU ARE</p><h1>Your <em>cart</em></h1><div id="cart-items"></div><div id="cart-empty" class="empty-state small"><div class="bag">♧</div><h2>Your cart is empty</h2><p>Find a course made for your next chapter.</p><button class="dark-cta" data-nav="courses">Explore courses</button></div><div id="cart-summary" class="cart-summary hidden"><div class="coupon">✦ <span>FIRSTFLOW20 applied</span><b>−20%</b></div><div class="total-line"><span>Original total</span><b id="original-total"></b></div><div class="total-line"><span>First purchase discount</span><b id="discount-total"></b></div><div class="final-line"><span>Total today</span><b id="final-total"></b></div><p class="saving" id="saving"></p><button class="checkout" onclick="openLoginModal()">Checkout securely <span>→</span></button></div></section>
 
     <section id="profile" class="page"><p class="eyebrow">MY ACCOUNT</p><h1>Profile</h1><div class="profile-card"><div class="large-avatar">AK</div><h2>Ananya Kapoor</h2><p>Learning English Communication</p><button class="outline-button">Edit profile</button></div><div class="details"><p><span>Age</span><b>22 years</b></p><p><span>Email</span><b>ananya@email.com</b></p><p><span>Phone number</span><b>+91 98765 43210</b></p><p><span>Qualification</span><b>Graduate</b></p><p><span>Resume</span><b class="pink">View uploaded file</b></p><p><span>My English rating</span><b>68% · Growing strong</b></p></div><section class="profile-progress"><p class="eyebrow">MY PROGRESS</p><h3>English Communication <span>38%</span></h3><div class="progress"><span style="width:38%"></span></div><p class="subtle">2 of 8 live sessions attended</p></section><button class="list-button">♡ &nbsp; Wishlist <span>›</span></button><button class="list-button">♧ &nbsp; Notifications <span>3</span></button><button class="list-button logout">↪ &nbsp; Log out <span>›</span></button></section>
     <section id="notifications" class="page"><button class="back-button" data-nav="profile">← &nbsp; Back to profile</button><p class="eyebrow">STAY IN THE FLOW</p><h1>Notification <em>centre</em></h1><p class="intro">Everything important for your learning, in one place.</p><div class="notifications"><article class="notification unread"><span class="notice-icon pink-bg">✦</span><div><h3>Live class starts today</h3><p>Speaking without fear · 6:30 PM</p><small>Just now</small></div><i></i></article><article class="notification unread"><span class="notice-icon blue-bg">▤</span><div><h3>New notes uploaded</h3><p>Day 2 speaking warm-up is ready for you.</p><small>2 hours ago</small></div><i></i></article><article class="notification"><span class="notice-icon lav-bg">✓</span><div><h3>Assignment reminder</h3><p>Submit your “Introduce yourself” voice note.</p><small>Yesterday</small></div></article><article class="notification"><span class="notice-icon cream-bg">%</span><div><h3>A little gift for your next course</h3><p>Your first-purchase 20% offer is active.</p><small>Yesterday</small></div></article><article class="notification"><span class="notice-icon blue-bg">♜</span><div><h3>Your certificate is waiting</h3><p>Complete your course to unlock your certificate.</p><small>3 days ago</small></div></article></div></section>
   </main>
 
   <nav class="bottom-nav"><button class="nav-link active" data-nav="home"><span>⌂</span>Home</button><button class="nav-link" data-nav="courses"><span>▣</span>Courses</button><button class="nav-link" data-nav="notes"><span>▤</span>Notes</button><button class="nav-link" data-nav="certificates"><span>♜</span>Certificates</button><button class="nav-link" data-nav="cart"><span>♧</span>Cart <i id="cart-count"></i></button></nav>
+
+  <div id="login-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeLoginModal()">✕</button>
+      <h2>Login to Mystic</h2>
+      <div id="login-form">
+        <input type="email" id="login-email" placeholder="Enter your email" class="input-field">
+        <input type="tel" id="login-phone" placeholder="Enter your phone (+91...)" class="input-field">
+        <button class="dark-cta" onclick="handleLogin()">Continue →</button>
+        <p class="terms-text">By logging in, you agree to our Terms of Service</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="payment-modal" class="modal hidden">
+    <div class="modal-content payment-modal">
+      <button class="close-modal" onclick="closePaymentModal()">✕</button>
+      <h2>Complete Payment</h2>
+      <div class="payment-methods">
+        <button class="payment-option active" onclick="selectPaymentMethod('upi')">
+          <span class="method-icon">📱</span>
+          <span>UPI</span>
+        </button>
+        <button class="payment-option" onclick="selectPaymentMethod('bank')">
+          <span class="method-icon">🏦</span>
+          <span>Bank Transfer</span>
+        </button>
+      </div>
+      <div id="upi-section" class="payment-section">
+        <h3>Pay via UPI</h3>
+        <input type="text" id="upi-id" placeholder="Enter UPI ID (e.g., name@upi)" class="input-field">
+        <button class="dark-cta" onclick="processUPIPayment()">Confirm UPI Payment →</button>
+      </div>
+      <div id="bank-section" class="payment-section hidden">
+        <h3>Bank Transfer Details</h3>
+        <div class="bank-details">
+          <p><span>Bank Name:</span> <b>HDFC Bank</b></p>
+          <p><span>Account Name:</span> <b>Mystic Education Pvt Ltd</b></p>
+          <p><span>Account Number:</span> <b>12345678901234</b></p>
+          <p><span>IFSC Code:</span> <b>HDFC0000001</b></p>
+        </div>
+        <input type="text" id="transfer-ref" placeholder="Enter transaction reference ID" class="input-field">
+        <button class="dark-cta" onclick="processBankPayment()">Confirm Transfer →</button>
+      </div>
+      <div id="payment-summary">
+        <p class="eyebrow">PAYMENT SUMMARY</p>
+        <div class="total-line"><span>Amount to pay</span><b id="payment-amount"></b></div>
+      </div>
+    </div>
+  </div>
+
   <div id="toast" class="toast"></div>
   <script src="app.js"></script>
   <script src="overrides.js"></script>

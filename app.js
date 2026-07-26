@@ -10,7 +10,26 @@ const courses = [
  {id:'literature',title:'Study English Literature',duration:'3 months',price:1200,theme:'basics',desc:'Explore timeless classics and modern works with expert analysis and discussion.',includes:['Live seminars','Critical analysis','Essay writing']}
 ];
 let cart = JSON.parse(localStorage.getItem('mystic-cart') || '[]');
+let currentUser = JSON.parse(localStorage.getItem('mystic-user') || 'null');
 const money = n => `₹${n.toLocaleString('en-IN')}`;
+
+function validateEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
+function validatePhone(p){return /^[+]?[0-9]{10,}$/.test(p.replace(/[^\d+]/g,''))}
+
+function openLoginModal(){if(!currentUser)document.querySelector('#login-modal').classList.remove('hidden');else openPaymentModal()}
+function closeLoginModal(){document.querySelector('#login-modal').classList.add('hidden')}
+
+function handleLogin(){const email=document.querySelector('#login-email').value;const phone=document.querySelector('#login-phone').value;if(!validateEmail(email)){toast('Enter a valid email');return}if(!validatePhone(phone)){toast('Enter a valid phone number');return}currentUser={email:email,phone:phone,joinedAt:new Date().toISOString()};localStorage.setItem('mystic-user',JSON.stringify(currentUser));document.querySelector('#login-email').value='';document.querySelector('#login-phone').value='';closeLoginModal();toast('Login successful! ✦');setTimeout(openPaymentModal,500)}
+
+function openPaymentModal(){if(!currentUser){openLoginModal();return}const chosen=courses.filter(c=>cart.includes(c.id));const final=chosen.reduce((s,c)=>s+c.price,0)*(1-(chosen.length===courses.length?.30:.20));document.querySelector('#payment-amount').textContent=money(Math.round(final));document.querySelector('#payment-modal').classList.remove('hidden')}
+function closePaymentModal(){document.querySelector('#payment-modal').classList.add('hidden')}
+
+function selectPaymentMethod(method){document.querySelectorAll('.payment-option').forEach(b=>b.classList.remove('active'));event.target.closest('.payment-option').classList.add('active');document.querySelector('#upi-section').classList.toggle('hidden',method!=='upi');document.querySelector('#bank-section').classList.toggle('hidden',method!=='bank')}
+
+function processUPIPayment(){const upiId=document.querySelector('#upi-id').value;if(!upiId||!upiId.includes('@')){toast('Enter a valid UPI ID');return}const chosen=courses.filter(c=>cart.includes(c.id));const final=Math.round(chosen.reduce((s,c)=>s+c.price,0)*(1-(chosen.length===courses.length?.30:.20)));const txnId='TXN'+Date.now();localStorage.setItem('mystic-txn-'+txnId,JSON.stringify({type:'UPI',upiId:upiId,amount:final,user:currentUser,courses:cart,date:new Date().toISOString()}));toast(`Payment of ${money(final)} initiated via UPI ✓`);cart=[];localStorage.setItem('mystic-cart','[]');renderCart();closePaymentModal();setTimeout(()=>navigate('home'),1000)}
+
+function processBankPayment(){const refId=document.querySelector('#transfer-ref').value;if(!refId){toast('Enter transaction reference ID');return}const chosen=courses.filter(c=>cart.includes(c.id));const final=Math.round(chosen.reduce((s,c)=>s+c.price,0)*(1-(chosen.length===courses.length?.30:.20)));localStorage.setItem('mystic-txn-BANK'+Date.now(),JSON.stringify({type:'Bank Transfer',refId:refId,amount:final,user:currentUser,courses:cart,date:new Date().toISOString()}));toast(`Bank transfer of ${money(final)} recorded ✓`);cart=[];localStorage.setItem('mystic-cart','[]');renderCart();closePaymentModal();setTimeout(()=>navigate('home'),1000)}
+
 function renderCourses(){document.querySelector('#course-list').innerHTML=courses.map(c=>`<article class="course-card"><div class="course-image ${c.theme}"><span class="duration">${c.duration} · Live 1:1</span></div><div class="course-info"><div class="top-course"><h3>${c.title}</h3><span class="rating">★ 4.9</span></div><p>${c.desc}</p><div class="inclusions">${c.includes.map(i=>`<span>${i}</span>`).join('')}</div><div class="course-bottom"><div class="price"><b>${money(c.price)}</b>/month</div><div class="course-buttons"><button class="details-btn" onclick="details('${c.id}')">Details</button><button class="add-btn" onclick="add('${c.id}')">Add to cart</button></div></div></div></article>`).join('')}
 function add(id){if(!cart.includes(id)){cart.push(id);localStorage.setItem('mystic-cart',JSON.stringify(cart));toast('Added to your cart ✦');renderCart();}else toast('This course is already in your cart');}
 function remove(id){cart=cart.filter(x=>x!==id);localStorage.setItem('mystic-cart',JSON.stringify(cart));renderCart()}
