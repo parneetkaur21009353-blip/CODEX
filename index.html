@@ -66,6 +66,7 @@
       <p class="eyebrow" id="home-date">SUNDAY, 26 JULY</p>
       <h1>Welcome back, <em id="home-name">Ananya</em></h1>
       <p class="intro">Your voice is getting stronger. Let’s make today count.</p>
+      <button class="text-button" onclick="openEditLoginModal()">Edit login info</button>
 
       <section class="hero-card">
         <span class="hero-orb orb-one"></span><span class="hero-orb orb-two"></span>
@@ -130,6 +131,39 @@
         <button class="dark-cta" onclick="handleLogin()">Continue →</button>
         <p class="terms-text">By logging in, you agree to our Terms of Service</p>
       </div>
+    </div>
+  </div>
+
+  <div id="edit-login-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeEditLoginModal()">✕</button>
+      <h2>Edit Login Information</h2>
+      <form id="edit-login-form" onsubmit="saveLoginInfo(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="edit-login-name" placeholder="Full name" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="edit-login-email" placeholder="Email" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="edit-login-phone" placeholder="Phone" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label>Date of Birth</label>
+          <input type="date" id="edit-login-dob" class="input-field" required>
+        </div>
+        <div class="form-group">
+          <label>Profile Picture</label>
+          <input type="file" id="edit-login-picture" accept="image/*" class="file-input">
+          <label for="edit-login-picture" class="upload-button">📷 Change Picture</label>
+          <img id="edit-login-pic-preview" class="picture-preview hidden" alt="Preview">
+        </div>
+        <button type="submit" class="dark-cta" style="width:100%">Save Changes →</button>
+        <button type="button" class="outline-button" onclick="closeEditLoginModal()" style="width:100%;margin-top:10px">Cancel</button>
+      </form>
     </div>
   </div>
 
