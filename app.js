@@ -1,36 +1,53 @@
 const courses = [
- {id:'speaking',title:'English Communication',duration:'2 months',price:1200,theme:'speaking',emoji:'🎤',desc:'Learn to speak English fluently in real-life conversations.',includes:['Daily live 1:1','Speaking practice','Vocabulary']},
- {id:'basics',title:'Learn English from Basics',duration:'2 months',price:1200,theme:'basics',emoji:'📚',desc:'A friendly path from alphabet to confident sentences.',includes:['Sentence building','Daily exercises','Worksheets']},
- {id:'grammar',title:'Too Good at Grammar',duration:'1 month',price:1500,theme:'grammar',emoji:'✍️',desc:'Build strong, clear English with practical grammar.',includes:['Tenses','Voice','Practice quizzes']},
- {id:'interview',title:'Interview & Soft Skills',duration:'1 month',price:1500,theme:'interview',emoji:'💼',desc:'Show up prepared, poised and ready to impress.',includes:['HR practice','Resume guidance','Group discussion']},
- {id:'confidence',title:'Build Speaking Confidence',duration:'1 month',price:1000,theme:'confidence',emoji:'⭐',desc:'Find your voice through gentle, daily fluency practice.',includes:['Public speaking','Fear removal','Body language']},
- {id:'excel',title:'Learn Excel',duration:'2 months',price:1200,theme:'excel',emoji:'📊',desc:'Move from basics to practical spreadsheets, formulas and polished reports.',includes:['Live 1:1','Formulas','Projects']},
- {id:'ai',title:'Learn AI Tools',duration:'1 month',price:1500,theme:'ai',emoji:'🤖',desc:'Use modern AI tools confidently for study, work and creativity.',includes:['Live 1:1','AI prompts','Hands-on tasks']},
- {id:'deepai',title:'Deep AI Learning',duration:'2 months',price:1500,theme:'ai',emoji:'🧠',desc:'Master advanced AI models, neural networks and machine learning engineering.',includes:['Live 1:1','AI models','Deep learning projects']},
- {id:'literature',title:'Study English Literature',duration:'3 months',price:1200,theme:'basics',emoji:'📖',desc:'Explore timeless classics and modern works with expert analysis and discussion.',includes:['Live seminars','Critical analysis','Essay writing']}
+  {id:'speaking',title:'English Communication',duration:'2 months',price:1200,theme:'speaking',emoji:'🎤',desc:'Learn to speak English fluently in real-life conversations.',includes:['Daily live 1:1','Speaking practice','Vocabulary']},
+  {id:'basics',title:'Learn English from Basics',duration:'2 months',price:1200,theme:'basics',emoji:'📚',desc:'A friendly path from alphabet to confident sentences.',includes:['Sentence building','Daily exercises','Worksheets']},
+  {id:'grammar',title:'Too Good at Grammar',duration:'1 month',price:1500,theme:'grammar',emoji:'✍️',desc:'Build strong, clear English with practical grammar.',includes:['Tenses','Voice','Practice quizzes']},
+  {id:'interview',title:'Interview & Soft Skills',duration:'1 month',price:1500,theme:'interview',emoji:'💼',desc:'Show up prepared, poised and ready to impress.',includes:['HR practice','Resume guidance','Group discussion']},
+  {id:'confidence',title:'Build Speaking Confidence',duration:'1 month',price:1000,theme:'confidence',emoji:'⭐',desc:'Find your voice through gentle, daily fluency practice.',includes:['Public speaking','Fear removal','Body language']},
+  {id:'excel',title:'Learn Excel',duration:'2 months',price:1200,theme:'excel',emoji:'📊',desc:'Move from basics to practical spreadsheets, formulas and polished reports.',includes:['Live 1:1','Formulas','Projects']},
+  {id:'ai',title:'Learn AI Tools',duration:'1 month',price:1500,theme:'ai',emoji:'🤖',desc:'Use modern AI tools confidently for study, work and creativity.',includes:['Live 1:1','AI prompts','Hands-on tasks']},
+  {id:'deepai',title:'Deep AI Learning',duration:'2 months',price:1500,theme:'ai',emoji:'🧠',desc:'Master advanced AI models, neural networks and machine learning engineering.',includes:['Live 1:1','AI models','Deep learning projects']},
+  {id:'literature',title:'Study English Literature',duration:'3 months',price:1200,theme:'basics',emoji:'📖',desc:'Explore timeless classics and modern works with expert analysis and discussion.',includes:['Live seminars','Critical analysis','Essay writing']}
 ];
+
 let cart = JSON.parse(localStorage.getItem('mystic-cart') || '[]');
 let currentUser = JSON.parse(localStorage.getItem('mystic-user') || 'null');
 const money = n => `₹${n.toLocaleString('en-IN')}`;
 
-function getAge(dob){const today=new Date();const age=today.getFullYear()-new Date(dob).getFullYear();return new Date(dob).setFullYear(today.getFullYear())>today?age-1:age}
+function getAge(dob){const today=new Date();const birth=new Date(dob);const age=today.getFullYear()-birth.getFullYear();return birth.setFullYear(today.getFullYear())>today?age-1:age}
 function validateEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
 function validatePhone(p){return /^[+]?[0-9]{10,}$/.test(p.replace(/[^\d+]/g,''))}
+function getInitials(name){return name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2)}
 
+// Primary Login (First time)
+function handlePrimaryLogin(e){e.preventDefault();const name=document.querySelector('#primary-name').value;const email=document.querySelector('#primary-email').value;const phone=document.querySelector('#primary-phone').value;const dob=document.querySelector('#primary-dob').value;const picInput=document.querySelector('#primary-picture');if(!name.trim()){toast('Enter your name');return}if(!validateEmail(email)){toast('Enter a valid email');return}if(!validatePhone(phone)){toast('Enter a valid phone number');return}if(!dob){toast('Please select date of birth');return}const age=getAge(dob);currentUser={name:name,email:email,phone:phone,dob:dob,age:age,picture:null,joinedAt:new Date().toISOString()};if(picInput.files.length>0){const reader=new FileReader();reader.onload=function(event){currentUser.picture=event.target.result;localStorage.setItem('mystic-user',JSON.stringify(currentUser));showAppAfterLogin()};reader.readAsDataURL(picInput.files[0])}else{localStorage.setItem('mystic-user',JSON.stringify(currentUser));showAppAfterLogin()}}
+
+function showAppAfterLogin(){document.querySelector('#login-page').classList.remove('active');document.querySelector('#topbar').style.display='flex';document.querySelector('#home').classList.add('active');document.querySelector('#home-name').textContent=currentUser.name.split(' ')[0];updateHomeDate();updateProfile();renderCourses();renderCart();setInterval(updateLiveTime,1000);setInterval(updateHomeDate,60000);toast(`Welcome, ${currentUser.name}! 🎉`)}
+
+function updateHomeDate(){const now=new Date();const dayNames=['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];const months=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];const dateStr=`${dayNames[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`;document.querySelector('#home-date').textContent=dateStr}
+
+// Payment Modal Login (for checkout)
 function openLoginModal(){if(!currentUser)document.querySelector('#login-modal').classList.remove('hidden');else openPaymentModal()}
 function closeLoginModal(){document.querySelector('#login-modal').classList.add('hidden')}
 
-function handleLogin(){const email=document.querySelector('#login-email').value;const phone=document.querySelector('#login-phone').value;const dob=document.querySelector('#login-dob').value;if(!validateEmail(email)){toast('Enter a valid email');return}if(!validatePhone(phone)){toast('Enter a valid phone number');return}if(!dob){toast('Please select date of birth');return}const age=getAge(dob);currentUser={email:email,phone:phone,dob:dob,age:age,name:'User',joinedAt:new Date().toISOString()};localStorage.setItem('mystic-user',JSON.stringify(currentUser));document.querySelector('#login-email').value='';document.querySelector('#login-phone').value='';document.querySelector('#login-dob').value='';closeLoginModal();updateProfile();toast('Login successful! ✦');setTimeout(openPaymentModal,500)}
+// Edit Profile
+function toggleEditProfile(){const form=document.querySelector('#edit-profile-form');const isHidden=form.classList.contains('hidden');if(!isHidden){form.classList.add('hidden')}else{document.querySelector('#edit-name').value=currentUser.name;document.querySelector('#edit-phone').value=currentUser.phone;document.querySelector('#edit-email').value=currentUser.email;form.classList.remove('hidden')}}
 
-function handleLogout(){currentUser=null;localStorage.removeItem('mystic-user');cart=[];localStorage.setItem('mystic-cart','[]');renderCart();navigate('home');toast('Logged out ✓')}
+function saveProfile(){const name=document.querySelector('#edit-name').value;const phone=document.querySelector('#edit-phone').value;const email=document.querySelector('#edit-email').value;if(!name.trim()){toast('Enter name');return}if(!validatePhone(phone)){toast('Invalid phone');return}if(!validateEmail(email)){toast('Invalid email');return}currentUser.name=name;currentUser.phone=phone;currentUser.email=email;localStorage.setItem('mystic-user',JSON.stringify(currentUser));updateProfile();toggleEditProfile();toast('Profile updated! ✓')}
 
-function updateProfile(){if(!currentUser)return;const dob=new Date(currentUser.dob);const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const dobStr=`${dob.getDate()} ${months[dob.getMonth()]} ${dob.getFullYear()}`;document.querySelector('#profile-phone').textContent=currentUser.phone;document.querySelector('#profile-email').textContent=currentUser.email;document.querySelector('#profile-dob').textContent=dobStr;document.querySelector('#profile-age').textContent=`${currentUser.age} years`}
+// Picture Upload
+document.addEventListener('change',function(e){if(e.target.id==='primary-picture'){const file=e.target.files[0];if(file){const reader=new FileReader();reader.onload=function(event){document.querySelector('#picture-preview').src=event.target.result;document.querySelector('#picture-preview').classList.remove('hidden');document.querySelector('#picture-preview-text').textContent=file.name};reader.readAsDataURL(file)}}if(e.target.id==='profile-pic-upload' && currentUser){const file=e.target.files[0];if(file){const reader=new FileReader();reader.onload=function(event){currentUser.picture=event.target.result;localStorage.setItem('mystic-user',JSON.stringify(currentUser));document.querySelector('#profile-pic').src=event.target.result;document.querySelector('#profile-pic').classList.remove('hidden');toast('Picture updated!')};reader.readAsDataURL(file)}}});
+
+// Run Program / Start Learning
+function runProgram(){if(!currentUser){toast('Please login first');return}toast(`${currentUser.name}, let's start learning! 🚀`);navigate('courses')}
+
+function handleLogout(){currentUser=null;localStorage.removeItem('mystic-user');cart=[];localStorage.setItem('mystic-cart','[]');document.querySelector('#login-page').classList.add('active');document.querySelector('#topbar').style.display='none';document.querySelector('#home').classList.remove('active');document.querySelector('#profile').classList.remove('active');document.querySelector('#login-form-primary').reset();document.querySelector('#picture-preview').classList.add('hidden');renderCart();toast('Logged out ✓')}
+
+function updateProfile(){if(!currentUser)return;const name=currentUser.name;const initials=getInitials(name);document.querySelector('#profile-avatar').textContent=initials;document.querySelector('#profile-name').textContent=name;if(currentUser.picture){document.querySelector('#profile-pic').src=currentUser.picture;document.querySelector('#profile-pic').classList.remove('hidden')}const dob=new Date(currentUser.dob);const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const dobStr=`${dob.getDate()} ${months[dob.getMonth()]} ${dob.getFullYear()}`;document.querySelector('#profile-phone').textContent=currentUser.phone;document.querySelector('#profile-email').textContent=currentUser.email;document.querySelector('#profile-dob').textContent=dobStr;document.querySelector('#profile-age').textContent=`${currentUser.age} years`;document.querySelector('#avatar-btn').textContent=initials}
 
 function renderCalendar(){const today=new Date();const year=today.getFullYear();const month=today.getMonth();const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];document.querySelector('#calendar-month').textContent=`${monthNames[month]} ${year}`;const firstDay=new Date(year,month,1).getDay();const daysInMonth=new Date(year,month+1,0).getDate();let html='';for(let i=0;i<firstDay;i++)html+='<div class="empty-day"></div>';for(let day=1;day<=daysInMonth;day++){const isToday=day===today.getDate();html+=`<div class="calendar-day ${isToday?'today':''}">${day}</div>`}document.querySelector('#calendar-grid').innerHTML=html}
 
 function updateLiveTime(){const now=new Date();const hours=String(now.getHours()).padStart(2,'0');const mins=String(now.getMinutes()).padStart(2,'0');document.querySelector('#live-time').textContent=`${hours}:${mins}`;const dayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const dateStr=`${dayNames[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;document.querySelector('#live-date').textContent=dateStr}
-
-function editProfileToggle(){if(currentUser){toast('Profile editing coming soon!')}}
 
 function openPaymentModal(){if(!currentUser){openLoginModal();return}const chosen=courses.filter(c=>cart.includes(c.id));const final=chosen.reduce((s,c)=>s+c.price,0)*(1-(chosen.length===courses.length?.30:.20));document.querySelector('#payment-amount').textContent=money(Math.round(final));document.querySelector('#payment-modal').classList.remove('hidden')}
 function closePaymentModal(){document.querySelector('#payment-modal').classList.add('hidden')}
@@ -48,5 +65,7 @@ function renderCart(){const chosen=courses.filter(c=>cart.includes(c.id)), orig=
 function details(id){const c=courses.find(c=>c.id===id);toast(`${c.title}: ${c.duration} of live 1:1 sessions, notes & practice included`)}
 function toast(msg){const t=document.querySelector('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2700)}
 function navigate(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.nav-link').forEach(b=>b.classList.toggle('active',b.dataset.nav===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='profile'){updateProfile();renderCalendar();updateLiveTime()}}
-document.addEventListener('click',e=>{const target=e.target.closest('[data-nav]');if(target)navigate(target.dataset.nav)});setInterval(updateLiveTime,1000);renderCourses();renderCart();if(currentUser)updateProfile();
 
+// Initialize
+if(currentUser){showAppAfterLogin()}else{document.querySelector('#login-page').classList.add('active')}
+document.addEventListener('click',e=>{const target=e.target.closest('[data-nav]');if(target && currentUser)navigate(target.dataset.nav)});
